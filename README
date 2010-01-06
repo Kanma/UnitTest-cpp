@@ -1,0 +1,14 @@
+This is a custom distribution of UnitTest++, version 1.4, with a CMake-based
+build system.
+
+The original README file of UnitTest++ was renamed as 'UNITTEST-CPP-README'.
+
+
+This distribution don't contain the unit tests of UnitTest++, only the library
+itself.
+
+
+UnitTest++'s license is unchanged: this library is free software. You may copy,
+distribute, and modify it under the terms of the license contained in the file
+COPYING distributed with this package. This license is the same as the MIT/X
+Consortium license.
