@@ -29,5 +29,10 @@ endif(WIN32)
 # List the include paths
 include_directories(${UNITTEST_CPP_SOURCE_DIR}/include ${INCLUDE_PLATFORM})
 
+# Disable some warnings in Visual Studio
+if (WIN32)
+    add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+endif()
+
 # Declaration of the library
 add_library(UnitTest++ STATIC ${SRCS} ${SRCS_PLATFORM})
