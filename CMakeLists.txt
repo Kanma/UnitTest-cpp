@@ -7,7 +7,9 @@ if (NOT CMAKE_BUILD_TYPE)
 endif()
 
 # Set the output path
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${UNITTEST_CPP_BINARY_DIR}/lib")
+if (NOT CMAKE_ARCHIVE_OUTPUT_DIRECTORY)
+    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${UNITTEST_CPP_BINARY_DIR}/lib")
+endif()
 
 # Subdirectories
 add_subdirectory(src)
