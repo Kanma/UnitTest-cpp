@@ -1,25 +1,40 @@
 cmake_minimum_required(VERSION 2.6)
 project(UNITTEST_CPP)
 
-# Options
-if (NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE "Release")
+
+##########################################################################################
+# XMake-related settings
+
+# Set the output paths
+if (NOT DEFINED XMAKE_BINARY_DIR)
+    set(XMAKE_BINARY_DIR "${UNITTEST_CPP_BINARY_DIR}")
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${XMAKE_BINARY_DIR}/bin")
+    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${XMAKE_BINARY_DIR}/lib")
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${XMAKE_BINARY_DIR}/bin")
 endif()
 
-# Set the output path
-if (NOT CMAKE_ARCHIVE_OUTPUT_DIRECTORY)
-    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${UNITTEST_CPP_BINARY_DIR}/lib")
+# Set the dependencies path
+if (NOT DEFINED XMAKE_DEPENDENCIES_DIR)
+    set(XMAKE_DEPENDENCIES_DIR "${UNITTEST_CPP_SOURCE_DIR}/dependencies")
 endif()
 
-# XMake settings
-if (EXISTS "${UNITTEST_CPP_SOURCE_DIR}/dependencies/xmake/XMake.cmake")
-    include("${UNITTEST_CPP_SOURCE_DIR}/dependencies/xmake/XMake.cmake")
+
+##########################################################################################
+# XMake importation
+
+if (NOT EXISTS "${XMAKE_DEPENDENCIES_DIR}/XMake/XMake.cmake")
+    message(FATAL_ERROR
+"Missing dependency: XMake
+UnitTest++ requires XMake to compile. It is provided as a GIT submodule of this repository.
+Did you forgot to execute the following commands?
+   git submodule init
+   git submodule update")
 endif()
 
-xmake_init_static(UNITTEST_CPP)
-xmake_add_include_paths(UNITTEST_CPP "${UNITTEST_CPP_SOURCE_DIR}/include")
-xmake_add_link_paths(UNITTEST_CPP "${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}")
-xmake_add_link_targets(UNITTEST_CPP UnitTest++)
+include("${XMAKE_DEPENDENCIES_DIR}/XMake/XMake.cmake")
 
-# Subdirectories
+
+##########################################################################################
+# Process subdirectories
+
 add_subdirectory(src)

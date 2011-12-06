@@ -17,22 +17,31 @@ set(SRCS AssertException.cpp
          XmlTestReporter.cpp
 )
 
+
 # List the plateform-specific source files
 if (WIN32)
     set(SRCS_PLATFORM Win32/TimeHelpers.cpp)
     set(INCLUDE_PLATFORM ${UNITTEST_CPP_SOURCE_DIR}/include/Win32)
-else(WIN32)
+else()
     set(SRCS_PLATFORM Posix/SignalTranslator.cpp Posix/TimeHelpers.cpp)
     set(INCLUDE_PLATFORM ${UNITTEST_CPP_SOURCE_DIR}/include/Posix)
-endif(WIN32)
-
-# List the include paths
-include_directories(${UNITTEST_CPP_SOURCE_DIR}/include ${INCLUDE_PLATFORM})
-
-# Disable some warnings in Visual Studio
-if (WIN32)
-    add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 endif()
 
+
+# List the include paths
+set(INCLUDE_PATHS "${UNITTEST_CPP_SOURCE_DIR}/include")
+
+include_directories(${INCLUDE_PATHS} ${INCLUDE_PLATFORM})
+
+
 # Declaration of the library
-add_library(UnitTest++ STATIC ${SRCS} ${SRCS_PLATFORM})
+xmake_create_static_library(UNITTEST_CPP UnitTest++ ${SRCS} ${SRCS_PLATFORM})
+
+if (WIN32)
+    # Disable some warnings in Visual Studio
+    xmake_add_to_property(UNITTEST_CPP COMPILE_DEFINITIONS "_CRT_SECURE_NO_WARNINGS")
+endif()
+
+
+# Exportations
+xmake_export_include_paths(UNITTEST_CPP ${INCLUDE_PATHS})

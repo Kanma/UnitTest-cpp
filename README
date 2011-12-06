@@ -1,14 +1,40 @@
-This is a custom distribution of UnitTest++, version 1.4, with a CMake-based
-build system.
+This is a custom distribution of UnitTest++, version 1.4.
+
+This distribution includes a custom CMake-based build system, using XMake to
+simplify the compilation/linking of the library alongside an external program.
 
 The original README file of UnitTest++ was renamed as 'UNITTEST-CPP-README'.
-
 
 This distribution don't contain the unit tests of UnitTest++, only the library
 itself.
 
 
+License
+-------
+
 UnitTest++'s license is unchanged: this library is free software. You may copy,
 distribute, and modify it under the terms of the license contained in the file
 COPYING distributed with this package. This license is the same as the MIT/X
 Consortium license.
+
+
+Submodules
+----------
+
+This distribution use XMake as a GIT submodule.
+
+To download it, do:
+
+	$ git submodule init
+	$ git submodule update
+
+
+Compilation
+-----------
+
+It is recommended to compile the library in a separate folder. Here's how I do it:
+
+	$ mkdir build
+	$ cd build
+	$ cmake ..
+	$ make
