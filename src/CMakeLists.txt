@@ -39,7 +39,7 @@ xmake_create_static_library(UNITTEST_CPP UnitTest++ ${SRCS} ${SRCS_PLATFORM})
 
 if (WIN32)
     # Disable some warnings in Visual Studio
-    xmake_add_to_property(UNITTEST_CPP COMPILE_DEFINITIONS "_CRT_SECURE_NO_WARNINGS")
+    xmake_add_to_list_property(UNITTEST_CPP COMPILE_DEFINITIONS "_CRT_SECURE_NO_WARNINGS")
 endif()
 
 
